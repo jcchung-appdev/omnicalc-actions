@@ -7,36 +7,74 @@ class StatsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer"
+    @sorted_numbers = @numbers.sort 
 
-    @count = "Replace this string with your answer"
+    @count = @numbers.length
 
-    @minimum = "Replace this string with your answer"
+    @minimum = @numbers.sort[0]
 
-    @maximum = "Replace this string with your answer"
+    @maximum = @numbers.sort[@numbers.length-1]
 
-    @range = "Replace this string with your answer"
+    @range = @maximum - @minimum
 
     # Median
     # ======
 
-    @median = "Replace this string with your answer"
+    if @count % 2 == 0
+      median = (@sorted_numbers[@count/2]+@sorted_numbers[@count/2-1])/2
+    else
+      median = @sorted_numbers[(@count/2)+0.5]
+    end
 
-    @sum = "Replace this string with your answer"
+    @median = median
 
-    @mean = "Replace this string with your answer"
+    sum = 0
+    
+    @numbers.each do |i|
+      sum += i
+    end
+
+    @sum = sum
+
+    @mean = sum / @count
 
     # Variance
     # ========
+    sq_diffs = []
+    @numbers.each do |i|
+      sq_diffs.push((i-@mean)**2)
+    end
+    
+    sum_sq_diffs = 0
+    sq_diffs.each do |i|
+      sum_sq_diffs += i
+    end
+    
+    @variance = sum_sq_diffs / sq_diffs.length
 
-    @variance = "Replace this string with your answer"
-
-    @standard_deviation = "Replace this string with your answer"
+    @standard_deviation = Math.sqrt(@variance)
 
     # Mode
     # ====
+    
+    mode = 0
+    cnt = 0
+    max = -1
+    cur_num = 0
+    @sorted_numbers.each do |num|
+      if cur_num == num
+        cnt += 1
+      else
+        if cnt > max
+          max = cnt
+          mode = cur_num
+        end
+        cur_num = num
+        cnt = 0
+      end
+    end
 
-    @mode = "Replace this string with your answer"
+    @mode = mode
 
     # ================================================================================
     # Your code goes above.

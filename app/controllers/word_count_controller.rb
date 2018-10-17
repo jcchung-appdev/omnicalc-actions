@@ -15,7 +15,7 @@ class WordCountController < ApplicationController
 
     @character_count_without_spaces = @text.delete(" \t\r\n").length
 
-    @occurrences = @text.scan(@special_word).count
+    @occurrences = @text.downcase.scan(@special_word.downcase).count
 
     # ================================================================================
     # Your code goes above.
