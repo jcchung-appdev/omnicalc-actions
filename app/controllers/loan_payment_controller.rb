@@ -11,7 +11,8 @@ class LoanPaymentController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer"
+    apr = @apr / 100 / 12
+    @monthly_payment = (apr * @principal) / (1-(1+apr)**(-1*@years*12))
 
     # ================================================================================
     # Your code goes above.
